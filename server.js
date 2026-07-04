@@ -16,56 +16,57 @@ app.post('/api/download', async (req, res) => {
         return res.status(400).json({ success: false, error: 'A URL é obrigatória.' });
     }
 
-    // Seus dados reais obtidos no RapidAPI
+    // Dados extraídos do seu painel do RapidAPI
     const apiKey = '49aafa0ec5msh8b5ed03cf50a7c6p1485f0jsnca1dd508102c'; 
     const apiHost = 'instagram-downloader-scraper-reels-igtv-posts-stories.p.rapidapi.com'; 
     
-    // Endpoint correto desta API para buscar postagens/reels/stories através da URL
-    const apiUrl = `https://${apiHost}/post?url=${encodeURIComponent(url)}`;
+    // ROTA CORRETA: Alterado para /scraper conforme a documentação obtida
+    const apiUrl = `https://${apiHost}/scraper?url=${encodeURIComponent(url)}`;
 
     try {
         const response = await fetch(apiUrl, {
             method: 'GET',
             headers: {
                 'x-rapidapi-key': apiKey,
-                'x-rapidapi-host': apiHost
+                'x-rapidapi-host': apiHost,
+                'Content-Type': 'application/json'
             },
-            signal: AbortSignal.timeout(12000) // 12 segundos de tolerância
+            signal: AbortSignal.timeout(15000) // 15 segundos de tolerância para download de vídeos longos
         });
-
-        if (!response.ok) {
-            throw new Error(`RapidAPI respondeu com status ${response.status}`);
-        }
 
         const data = await response.json();
 
-        // Esta API específica costuma retornar a estrutura dentro de um array de mídias ou direto no objeto.
-        // O código abaixo mapeia as formas mais comuns que ela entrega o link do vídeo/imagem:
-        let finalUrl = '';
-
-        if (data && data.media_urls && data.media_urls.length > 0) {
-            // Se for um carrossel ou vídeo único, pega o primeiro link direto de download
-            finalUrl = data.media_urls[0];
-        } else if (data && data.download_url) {
-            finalUrl = data.download_url;
-        } else if (data && data.url) {
-            finalUrl = data.url;
+        // Tratamento de erros específicos retornados pela própria API (ex: link privado ou inválido)
+        if (response.status === 400 || data.error === 'Bad Request') {
+            return res.status(200).json({ 
+                success: false, 
+                error: data.message || 'Link inválido ou o perfil do Instagram é privado.' 
+            });
         }
 
-        if (finalUrl) {
-            return res.json({ success: true, downloadUrl: finalUrl });
+        if (!response.ok) {
+            throw new Error(`Erro na resposta do servidor da API: ${response.status}`);
+        }
+
+        // Mapeamento baseado no formato oficial fornecido: data -> [ { media: "url" } ]
+        if (data && data.data && data.data.length > 0) {
+            const finalUrl = data.data[0].media; // Pega o link de mídia do primeiro item encontrado
+            
+            if (finalUrl) {
+                return res.json({ success: true, downloadUrl: finalUrl });
+            }
         }
         
-        return res.status(400).json({ 
+        return res.status(200).json({ 
             success: false, 
-            error: 'Não encontramos nenhuma mídia para este link. Certifique-se de que o perfil não é privado.' 
+            error: 'Nenhuma mídia encontrada. Certifique-se de que o link pertence a um post ou Reels público.' 
         });
 
     } catch (error) {
-        console.error('Erro ao conectar com a API:', error.message);
+        console.error('Erro interno:', error.message);
         return res.status(200).json({ 
             success: false, 
-            error: 'Ocorreu um problema ao extrair o vídeo. Tente novamente em instantes.' 
+            error: 'O servidor de extração demorou para responder. Tente novamente em alguns segundos.' 
         });
     }
 });
