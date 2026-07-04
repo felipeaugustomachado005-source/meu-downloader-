@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baixar Vídeos do Instagram - Downloader Online</title>
+    <meta name="description" content="Baixe vídeos, fotos, Reels e Stories do Instagram em alta qualidade gratuitamente.">
+    
+    <style>
+        /* --- ESTILOS GERAIS --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* --- HEADER --- */
+        header {
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            padding: 15px 0;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* --- BLOCO DO FORMULÁRIO (PRINCIPAL) --- */
+        .hero-section {
+            background: linear-gradient(135deg, #472d4e 0%, #291a2e 100%);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .hero-section h1 {
+            font-size: 32px;
+            margin-bottom: 30px;
+        }
+
+        /* Abas de categorias */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .tab-btn.active, .tab-btn:hover {
+            background: #ffffff;
+            color: #472d4e;
+        }
+
+        /* Caixa de Input e Botão */
+        .search-box {
+            max-width: 700px;
+            margin: 0 auto;
+            display: flex;
+            background: white;
+            padding: 8px;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .search-box input {
+            flex: 1;
+            border: none;
+            padding: 15px 25px;
+            font-size: 16px;
+            border-radius: 50px;
+            outline: none;
+        }
+
+        .search-box button {
+            background: linear-gradient(45deg, #dc2743, #cc2366);
+            color: white;
+            border: none;
+            padding: 0 35px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .search-box button:hover {
+            transform: scale(1.02);
+        }
+
+        /* --- ÁREA DE ANÚNCIO --- */
+        .ads-placeholder {
+            max-width: 728px;
+            height: 90px;
+            background-color: #e9ecef;
+            border: 2px dashed #ced4da;
+            margin: 30px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6c757d;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        /* --- SEÇÃO COMO BAIXAR --- */
+        .how-to-section {
+            padding: 60px 0;
+            background: white;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 40px;
+            color: #291a2e;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .step-card {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+        }
+
+        .step-num {
+            font-size: 40px;
+            font-weight: bold;
+            color: #cc2366;
+            margin-bottom: 10px;
+        }
+
+        .step-card h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        /* --- SEÇÃO FAQ --- */
+        .faq-section {
+            padding: 60px 0;
+        }
+
+        .faq-item {
+            background: white;
+            margin-bottom: 15px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .faq-item h3 {
+            font-size: 18px;
+            color: #472d4e;
+            margin-bottom: 10px;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background: #291a2e;
+            color: #a59ba7;
+            text-align: center;
+            padding: 30px 0;
+            font-size: 14px;
+            margin-top: 40px;
+        }
+
+        /* RESPONSIVIDADE */
+        @media (max-width: 600px) {
+            .search-box {
+                flex-direction: column;
+                background: transparent;
+                box-shadow: none;
+                gap: 10px;
+                padding: 0;
+            }
+            .search-box input {
+                box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            }
+            .search-box button {
+                padding: 15px 0;
+            }
+            .ads-placeholder {
+                width: 100%;
+                height: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">InstaBaixar</div>
+            <div>
+                <!-- Espaço futuro para seletor de idiomas se quiser -->
+                <span>PT</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ÁREA PRINCIPAL DO DOWNLOADER -->
+    <section class="hero-section">
+        <div class="container">
+            <h1>Baixar Vídeo do Instagram</h1>
+            
+            <!-- Abas decorativas idênticas ao modelo -->
+            <div class="tabs">
+                <button class="tab-btn active">Vídeo</button>
+                <button class="tab-btn">Foto</button>
+                <button class="tab-btn">Reels</button>
+                <button class="tab-btn">História</button>
+                <button class="tab-btn">Destaques</button>
+            </div>
+
+            <!-- Caixa de busca -->
+            <form class="search-box" onsubmit="event.preventDefault(); executarDownload();">
+                <input type="text" id="linkInput" placeholder="Insira o link do Instagram aqui..." required>
+                <button type="submit">Baixar</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- ESPAÇO PARA ANÚNCIO (Banners tipo AdSense/Adsterra rodam aqui) -->
+    <div class="container">
+        <div class="ads-placeholder">
+            [ESPAÇO RESERVADO PARA ANÚNCIO - BANNER 728x90]
+        </div>
+    </div>
+
+    <!-- SEÇÃO COMO BAIXAR -->
+    <section class="how-to-section">
+        <div class="container">
+            <h2 class="section-title">Como baixar vídeos do Instagram?</h2>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-num">1</div>
+                    <h3>Copie a URL</h3>
+                    <p>Abra o Instagram, vá até o vídeo ou foto que deseja salvar e copie o link (URL).</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">2</div>
+                    <h3>Cole o Link</h3>
+                    <p>Volte aqui no site, cole o link copiado no campo de entrada acima e clique em "Baixar".</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">3</div>
+                    <h3>Salve o Arquivo</h3>
+                    <p>Aguarde o processamento, clique no link gerado e o arquivo será salvo no seu aparelho.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO DE PERGUNTAS FREQUENTES (Excelente para SEO do Google) -->
+    <section class="faq-section">
+        <div class="container">
+            <h2 class="section-title">Perguntas Frequentes</h2>
+            
+            <div class="faq-item">
+                <h3>Preciso pagar para usar este serviço?</h3>
+                <p>Não, nossa ferramenta de download do Instagram é 100% gratuita e ilimitada.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Onde ficam salvos os vídeos após o download?</h3>
+                <p>Geralmente, os arquivos baixados vão direto para a pasta padrão de "Downloads" do seu computador ou celular.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>É seguro usar este downloader?</h3>
+                <p>Sim, você não precisa fazer login com sua conta do Instagram nem instalar programas de terceiros.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 InstaBaixar - Ferramenta gratuita de downloads. Não somos afiliados ao Instagram/Meta.</p>
+        </div>
+    </footer>
+
+    <!-- LÓGICA JAVASCRIPT INICIAL -->
+    <script>
+        function executarDownload() {
+            const url = document.getElementById('linkInput').value;
+            alert('Link recebido: ' + url + '\n\nNota: Para fazer o download funcionar de verdade, agora você precisa integrar este campo a um sistema de Back-end (API de raspagem de dados) que extraia o arquivo do Instagram.');
+            
+            // Aqui você faria uma requisição (fetch) para a sua API futuramente.
+        }
+    </script>
+</body>
+</html>
