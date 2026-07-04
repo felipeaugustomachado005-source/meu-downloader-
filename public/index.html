@@ -323,13 +323,36 @@
     </footer>
 
     <!-- LÓGICA JAVASCRIPT INICIAL -->
-    <script>
-        function executarDownload() {
-            const url = document.getElementById('linkInput').value;
-            alert('Link recebido: ' + url + '\n\nNota: Para fazer o download funcionar de verdade, agora você precisa integrar este campo a um sistema de Back-end (API de raspagem de dados) que extraia o arquivo do Instagram.');
-            
-            // Aqui você faria uma requisição (fetch) para a sua API futuramente.
+<script>
+    async function executarDownload() {
+        const urlInput = document.getElementById('linkInput').value;
+        const botao = document.querySelector('.search-box button');
+        
+        botao.innerText = "Processando...";
+        botao.disabled = true;
+
+        try {
+            const response = await fetch('/api/download', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ url: urlInput })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                // Remove o alerta e abre o vídeo/imagem em uma nova aba para o usuário salvar
+                window.open(data.downloadUrl, '_blank');
+            } else {
+                alert('Erro: ' + (data.error || 'Falha ao obter o link.'));
+            }
+        } catch (error) {
+            alert('Erro ao conectar com o servidor.');
+        } finally {
+            botao.innerText = "Baixar";
+            botao.disabled = false;
         }
-    </script>
+    }
+</script>
 </body>
 </html>
